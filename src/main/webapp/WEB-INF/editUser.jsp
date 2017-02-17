@@ -10,10 +10,10 @@
 <html>
 <body>
     <h2>
-        <a href="/webapp/home">Home</a>
+        <a href="/home">Home</a>
     </h2>
 
-    <form action="/webapp/user/edit?editingUsername=${editingUsername}&editingFirstName=${editingFirstName}&editingLastName=${editingLastName}" method="post">
+    <form action="/user/edit?editingUsername=${editingUsername}&editingFirstName=${editingFirstName}&editingLastName=${editingLastName}" method="post">
         Current Username: ${editingUsername}
         <br/>
         Desired Username: <input type="text" name="username"/>

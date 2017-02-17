@@ -1,5 +1,7 @@
 package io.muic.ooc.service;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,6 +73,7 @@ public class DatabaseQueryService {
         Connection currentCon = null;
         PreparedStatement pst = null;
         int rs;
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         String searchQuery = "insert into users values (NULL,?,?,?,?)";
         boolean isAdded = false;
         try {
@@ -78,7 +81,7 @@ public class DatabaseQueryService {
 
             pst = currentCon.prepareStatement(searchQuery);
             pst.setString(1,username);
-            pst.setString(2,password);
+            pst.setString(2,hashedPassword);
             pst.setString(3,firstName);
             pst.setString(4,lastName);
 
@@ -182,17 +185,17 @@ public class DatabaseQueryService {
         Connection currentCon = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        String searchQuery = "select * from users where username=? AND password=?";
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        String searchQuery = "select password from users where username=?";
 
         try {
             currentCon = DatabaseConnectionService.getConnection();
             pst = currentCon.prepareStatement(searchQuery);
             pst.setString(1,username);
-            pst.setString(2,password);
+//            pst.setString(2,hashedPassword);
             rs = pst.executeQuery();
             boolean more = rs.next();
-            if (more) {
-
+            if (more && BCrypt.checkpw(password,rs.getString("password"))) {
                 authenticate = true;
             }
         } catch (Exception ex) {

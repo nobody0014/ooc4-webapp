@@ -23,7 +23,7 @@ public class AddUserServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
             rd.include(request, response);
         }else {
-            response.sendRedirect("/webapp/login");
+            response.sendRedirect("/login");
         }
     }
 

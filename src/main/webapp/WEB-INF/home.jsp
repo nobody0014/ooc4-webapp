@@ -31,10 +31,10 @@
     </table>
     <h3>${removeStatus}</h3>
     <h3>
-        <a href="/webapp/user/add">add user</a>
+        <a href="/user/add">add user</a>
     </h3>
     <h3>
-        <a href="/webapp/logout">logout</a>
+        <a href="/logout">logout</a>
     </h3>
 </body>
 </html>

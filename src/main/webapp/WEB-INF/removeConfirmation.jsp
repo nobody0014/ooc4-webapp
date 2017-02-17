@@ -11,10 +11,10 @@
 <body>
 <%String removeUsername =  request.getParameter("removeUsername");%>
 Do you want to remove <%= removeUsername%> from the user list?
-<form action="/webapp/user/remove?removeUsername=<%= removeUsername%>" method="post">
+<form action="/user/remove?removeUsername=<%= removeUsername%>" method="post">
     <input type="submit" value="yes" />
 </form>
-<form  action="/webapp/home" method="get" >
+<form  action="/home" method="get" >
     <input type="submit" value="no" />
 </form>
 </body>

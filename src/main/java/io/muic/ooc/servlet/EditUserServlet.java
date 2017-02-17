@@ -31,10 +31,10 @@ public class EditUserServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editUser.jsp");
                 rd.include(request, response);
             }else {
-                response.sendRedirect("/webapp/home");
+                response.sendRedirect("/home");
             }
         }else {
-            response.sendRedirect("/webapp/home");
+            response.sendRedirect("/home");
         }
     }
 
@@ -79,7 +79,7 @@ public class EditUserServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editUser.jsp");
             rd.include(request, response);
         }else {
-            response.sendRedirect("/webapp/home");
+            response.sendRedirect("/home");
         }
     }
 

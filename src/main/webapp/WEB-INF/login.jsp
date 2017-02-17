@@ -2,7 +2,7 @@
     <body>
         <h2>Login</h2>
         <p>${error}</p>
-        <form action="/webapp/login" method="post">
+        <form action="/login" method="post">
             Username:<br/>
             <input type="text" name="username"/>
             <br/>

@@ -1,8 +1,8 @@
 <html>
     <body>
-        <h2><a href="user">Home</a></h2>
+        <h2><a href="/home">Home</a></h2>
         <h3>Add User Page</h3>
-        <form action="/webapp/user/add" method="post">
+        <form action="/user/add" method="post">
             Username:<br/>
             <input type="text" name="username"/>
             <br/>

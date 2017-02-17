@@ -18,6 +18,6 @@ public class LogoutServlet extends HttpServlet {
         if(SecurityService.isAuthorized(request)){
             SecurityService.logout(request);
         }
-        response.sendRedirect("login");
+        response.sendRedirect("/login");
     }
 }

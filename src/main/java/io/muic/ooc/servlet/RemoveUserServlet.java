@@ -24,14 +24,14 @@ public class RemoveUserServlet extends HttpServlet {
             String removeUsername = request.getParameter("removeUsername");
             if (StringUtils.isBlank(removeUsername) || StringUtils.equals(username,removeUsername)
                     || !DatabaseQueryService.isUserExists(removeUsername)){
-                response.sendRedirect("/webapp/home");
+                response.sendRedirect("/home");
             }else {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/removeConfirmation.jsp");
                 request.setAttribute("username",removeUsername);
                 rd.include(request, response);
             }
         } else {
-            response.sendRedirect("/webapp/login");
+            response.sendRedirect("/login");
         }
     }
 
@@ -43,6 +43,6 @@ public class RemoveUserServlet extends HttpServlet {
         }else {
             request.getSession().setAttribute("removeStatus", "Error trying to remove " + removeUsername);
         }
-        response.sendRedirect("/webapp/user");
+        response.sendRedirect("/user");
     }
 }

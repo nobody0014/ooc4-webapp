@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(SecurityService.isAuthorized(request)){
-            response.sendRedirect("/webapp/home");
+            response.sendRedirect("/home");
         }else{
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
             rd.include(request, response);
@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)) {
             if (SecurityService.authenticate(username, password, request)) {
-                response.sendRedirect("/webapp/home");
+                response.sendRedirect("home");
             } else {
                 String error = "Wrong username or password.";
                 request.setAttribute("error", error);

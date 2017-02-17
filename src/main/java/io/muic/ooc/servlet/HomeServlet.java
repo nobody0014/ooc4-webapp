@@ -23,9 +23,9 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authorized = SecurityService.isAuthorized(request);
         if (authorized) {
-            response.sendRedirect("/webapp/user");
+            response.sendRedirect("/user");
         } else {
-            response.sendRedirect("/webapp/login");
+            response.sendRedirect("/login");
         }
     }
 }

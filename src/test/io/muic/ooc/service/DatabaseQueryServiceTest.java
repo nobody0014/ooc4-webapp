@@ -2,6 +2,7 @@ package io.muic.ooc.service;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -15,6 +16,11 @@ public class DatabaseQueryServiceTest {
     public void isUserExists() throws Exception {
         assertEquals(true, DatabaseQueryService.isUserExists("admin"));
         assertEquals(false, StringUtils.isBlank("admin") || StringUtils.equals("dede","admin") || !DatabaseQueryService.isUserExists("admin"));
+        System.out.println("password " + BCrypt.hashpw("password", BCrypt.gensalt()));
+        System.out.println("pan " + BCrypt.hashpw("password", BCrypt.gensalt()));
+        System.out.println("helloworld " + BCrypt.hashpw("password", BCrypt.gensalt()));
+        System.out.println("do " + BCrypt.hashpw("password", BCrypt.gensalt()));
+        System.out.println("dedjeiejiejdeijeidjeidjeidjeid" + BCrypt.hashpw("password", BCrypt.gensalt()));
     }
 
 

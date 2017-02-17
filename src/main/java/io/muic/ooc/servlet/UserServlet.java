@@ -46,7 +46,7 @@ public class UserServlet extends HttpServlet {
             rd.include(request, response);
 
         } else {
-            response.sendRedirect("/webapp/login");
+            response.sendRedirect("/login");
         }
     }
 
@@ -56,9 +56,9 @@ public class UserServlet extends HttpServlet {
             usernameListString.append("<tr><td>" + username + "</td><td>");
             if (!mainUsername.equals(username)){
                 //a tag for removing this user
-                usernameListString.append("<a href=\"/webapp/user/remove?removeUsername=" + username + "\">remove</a>   ");
+                usernameListString.append("<a href=\"/user/remove?removeUsername=" + username + "\">remove</a>   ");
                 //a tag for editing this user information
-                usernameListString.append("<a href=\"/webapp/user/edit?editingUsername=" + username + "\">edit</a></td></tr>");
+                usernameListString.append("<a href=\"/user/edit?editingUsername=" + username + "\">edit</a></td></tr>");
             }
         }
         return usernameListString.toString();
