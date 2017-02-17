@@ -185,14 +185,12 @@ public class DatabaseQueryService {
         Connection currentCon = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         String searchQuery = "select password from users where username=?";
 
         try {
             currentCon = DatabaseConnectionService.getConnection();
             pst = currentCon.prepareStatement(searchQuery);
             pst.setString(1,username);
-//            pst.setString(2,hashedPassword);
             rs = pst.executeQuery();
             boolean more = rs.next();
             if (more && BCrypt.checkpw(password,rs.getString("password"))) {
