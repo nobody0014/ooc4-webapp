@@ -23,7 +23,7 @@ public class AddUserServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
             rd.include(request, response);
         }else {
-            response.sendRedirect("/login");
+            response.sendRedirect("/home");
         }
     }
 
@@ -32,30 +32,34 @@ public class AddUserServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
+        if (SecurityService.isAuthorized(request)){
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
 
-        //Check input
-        String inputError = checkValidInputs(username,password,firstName,lastName);
-        if (inputError.length() > 0){
-            request.setAttribute("addUserStatus", inputError);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
-            rd.include(request, response);
-        }
-        else{
-            if (!DatabaseQueryService.isDuplicateUsername(username) && DatabaseQueryService.addUserQuery(username,password,firstName,lastName)){
-                request.setAttribute("addUserStatus","User successfully added");
+            //Check input
+            String inputError = checkValidInputs(username,password,firstName,lastName);
+            if (inputError.length() > 0){
+                request.setAttribute("addUserStatus", inputError);
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
-                rd.include(request, response);
-            }else{
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
-                request.setAttribute("addUserStatus","Username " + username + " probably is taken");
                 rd.include(request, response);
             }
+            else{
+                if (!DatabaseQueryService.isDuplicateUsername(username) && DatabaseQueryService.addUserQuery(username,password,firstName,lastName)){
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
+                    request.setAttribute("addUserStatus","User successfully added");
+                    rd.include(request, response);
+                }else{
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
+                    request.setAttribute("addUserStatus","Username " + username + " probably is taken");
+                    rd.include(request, response);
+                }
+            }
         }
-
+        else{
+            response.sendRedirect("/home");
+        }
     }
 
     /**

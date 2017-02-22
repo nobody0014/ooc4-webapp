@@ -97,7 +97,7 @@ public class DatabaseQueryService {
         return isAdded;
     }
 
-    public static boolean updateUserQuery(String username, String firstName, String lastName){
+    public static boolean updateUserQuery(String username, String firstName, String lastName, String editingUsername){
         Connection currentCon = null;
         PreparedStatement pst = null;
         int rs;
@@ -110,7 +110,7 @@ public class DatabaseQueryService {
             pst.setString(1,username);
             pst.setString(2,firstName);
             pst.setString(3,lastName);
-            pst.setString(4,username);
+            pst.setString(4,editingUsername);
 
             rs = pst.executeUpdate();
             if (rs > 0){

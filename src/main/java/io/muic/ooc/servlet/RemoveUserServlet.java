@@ -31,18 +31,23 @@ public class RemoveUserServlet extends HttpServlet {
                 rd.include(request, response);
             }
         } else {
-            response.sendRedirect("/login");
+            response.sendRedirect("/home");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String removeUsername = request.getParameter("removeUsername");
-        if (DatabaseQueryService.removeUserQuery(removeUsername)){
-            request.getSession().setAttribute("removeStatus", "Removed " + removeUsername + " successfully");
-        }else {
-            request.getSession().setAttribute("removeStatus", "Error trying to remove " + removeUsername);
+        if (SecurityService.isAuthorized(request)){
+            String removeUsername = request.getParameter("removeUsername");
+            if (DatabaseQueryService.removeUserQuery(removeUsername)){
+                request.getSession().setAttribute("removeStatus", "Removed " + removeUsername + " successfully");
+            }else {
+                request.getSession().setAttribute("removeStatus", "Error trying to remove " + removeUsername);
+            }
+            response.sendRedirect("/user");
+        }else{
+            response.sendRedirect("/home");
         }
-        response.sendRedirect("/user");
+
     }
 }

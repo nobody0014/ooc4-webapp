@@ -46,7 +46,7 @@ public class UserServlet extends HttpServlet {
             rd.include(request, response);
 
         } else {
-            response.sendRedirect("/login");
+            response.sendRedirect("/home");
         }
     }
 

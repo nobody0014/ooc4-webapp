@@ -48,36 +48,49 @@ public class EditUserServlet extends HttpServlet {
             String desiredFirstName = request.getParameter("firstName");
             String desiredLastName = request.getParameter("lastName");
 
-            String usernameToUse, firstNameToUse, lastnameToUse;
-            if (isValidInput(desiredUsername, 30)){
-                usernameToUse = desiredUsername;
-                editingUsername = desiredUsername;
-            }else {
-                usernameToUse = editingUsername;
-            }
-            if (isValidInput(desiredFirstName, 20)){
-                firstNameToUse = desiredFirstName;
-                editingFirstName = desiredFirstName;
-            }else {
-                firstNameToUse = editingFirstName;
-            }
-            if (isValidInput(desiredLastName, 20)){
-                lastnameToUse = desiredLastName;
-                editingLastName = desiredLastName;
-            }else {
-                lastnameToUse = editingLastName;
-            }
 
-            request.setAttribute("editingUsername",editingUsername);
-            request.setAttribute("editingFirstName",editingFirstName);
-            request.setAttribute("editingLastName",editingLastName);
-            if(DatabaseQueryService.updateUserQuery(usernameToUse,firstNameToUse,lastnameToUse)){
-                request.setAttribute("updateStatus","Update successful");
-            }else {
-                request.setAttribute("updateStatus","Update failed");
+            if (desiredUsername == null && desiredUsername.equals("")){
+                desiredUsername = "";
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editUser.jsp");
-            rd.include(request, response);
+            if (!DatabaseQueryService.isDuplicateUsername(desiredUsername)){
+                String usernameToUse, firstNameToUse, lastnameToUse;
+                if (isValidInput(desiredUsername, 30)){
+                    usernameToUse = desiredUsername;
+                }else {
+                    usernameToUse = editingUsername;
+                }
+                if (isValidInput(desiredFirstName, 20)){
+                    firstNameToUse = desiredFirstName;
+                }else {
+                    firstNameToUse = editingFirstName;
+                }
+                if (isValidInput(desiredLastName, 20)){
+                    lastnameToUse = desiredLastName;
+                }else {
+                    lastnameToUse = editingLastName;
+                }
+
+                if(DatabaseQueryService.updateUserQuery(usernameToUse,firstNameToUse,lastnameToUse, editingUsername)){
+                    request.setAttribute("editingUsername",usernameToUse);
+                    request.setAttribute("editingFirstName",firstNameToUse);
+                    request.setAttribute("editingLastName",lastnameToUse);
+                    request.setAttribute("updateStatus","Update successful");
+                }else {
+                    request.setAttribute("editingUsername",editingUsername);
+                    request.setAttribute("editingFirstName",editingFirstName);
+                    request.setAttribute("editingLastName",editingLastName);
+                    request.setAttribute("updateStatus","Update failed");
+                }
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editUser.jsp");
+                rd.include(request, response);
+            }else {
+                request.setAttribute("editingUsername",editingUsername);
+                request.setAttribute("editingFirstName",editingFirstName);
+                request.setAttribute("editingLastName",editingLastName);
+                request.setAttribute("updateStatus","Update failed: could be duplicate username");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editUser.jsp");
+                rd.include(request, response);
+            }
         }else {
             response.sendRedirect("/home");
         }

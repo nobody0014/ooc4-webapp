@@ -30,22 +30,28 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // do login post logic
         // extract username and password from request
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)) {
-            if (SecurityService.authenticate(username, password, request)) {
-                response.sendRedirect("home");
+        if (SecurityService.isAuthorized(request)){
+            response.sendRedirect("/home");
+        }
+        else{
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password)) {
+                if (SecurityService.authenticate(username, password, request)) {
+                    response.sendRedirect("home");
+                } else {
+                    String error = "Wrong username or password.";
+                    request.setAttribute("error", error);
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
+                    rd.include(request, response);
+                }
             } else {
-                String error = "Wrong username or password.";
+                String error = "Username or password is missing.";
                 request.setAttribute("error", error);
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
                 rd.include(request, response);
             }
-        } else {
-            String error = "Username or password is missing.";
-            request.setAttribute("error", error);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
-            rd.include(request, response);
         }
+
     }
 }

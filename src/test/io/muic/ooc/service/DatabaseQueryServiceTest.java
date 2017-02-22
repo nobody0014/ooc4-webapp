@@ -58,7 +58,7 @@ public class DatabaseQueryServiceTest {
 
     @Test
     public void updateUserQuery() throws Exception{
-
+//        assertEquals(true,DatabaseQueryService.updateUserQuery("hello"));
     }
 
     @Test
